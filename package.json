@@ -1,0 +1,41 @@
+{
+  "name": "populus-philarchive",
+  "version": "0.0.1",
+  "description": "An overlay for philarchive using Populus",
+  "scripts": {
+    "test": "eslint src",
+    "build": "webpack --progress --mode=production",
+    "watch": "webpack --progress --watch",
+    "serve": "webpack serve --mode development",
+    "deploy": "ORIGIN=\"$(git remote get-url origin)\" && rm -rf dist/.git && npm run build && cd dist && git init && git add . && git commit -m \"deploy $(date -I)\" && git remote add origin \"$ORIGIN\" && git push --force origin main:gh-pages",
+    "preversion": "npm test",
+    "postversion": "npm run deploy && git push && git push --tags"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/eslint-parser": "^7.13.14",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-transform-react-jsx": "^7.12.17",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.2.0",
+    "eslint-config-preact": "^1.1.4",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.23.2",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.27.1",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2",
+    "worker-loader": "^3.0.8"
+  },
+  "author": "Graham Leach-Krouse",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "buffer": "^6.0.3",
+    "matrix-js-sdk": "^12.5.0",
+    "preact": "^10.5.12"
+  }
+}

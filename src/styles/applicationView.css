@@ -1,0 +1,84 @@
+#application-view {
+  display:grid;
+  justify-content:center;
+  padding:50px;
+}
+
+.application-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width:600px;
+}
+
+.application-form button,
+.application-form label {
+  max-width:150px;
+  grid-column: 1/2;
+  margin:10px;
+}
+
+.application-form textarea,
+.application-form input{
+  grid-column: 2/3;
+  margin:10px;
+  border:none;
+  background:#eeeeee;
+}
+
+.empty-result,
+.search-result {
+  padding:5px;
+  padding-bottom:25px;
+}
+
+.search-result a {
+  text-decoration:underline #ababab;
+  color:black;
+}
+
+.search-result a:hover {
+  text-decoration:underline black;
+  color:black;
+}
+
+.search-result-topic {
+  padding-top:5px;
+  padding-left:10px;
+  font-size:10pt;
+  color: #ababab;
+}
+
+.search-result-data {
+  font-size:10pt;
+  padding-top:5px;
+  padding-left:10px;
+}
+
+.search-result-data span,
+.paper-authors span {
+  padding-right:5px;
+}
+
+.search-result-data span:not(:first-child)::before,
+.paper-authors span:not(:first-child)::before {
+  content:"•";
+  padding-right: 5px;
+}
+
+#entry-code {
+  color:#ababab;
+}
+
+#new-discussion {
+  border:none;
+  font-weight:bold;
+  font-size:12pt;
+  cursor:pointer;
+  color:#ababab;
+  background:none;
+  transition: color .5s ease;
+}
+
+#new-discussion:hover {
+  color:black
+}
