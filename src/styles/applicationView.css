@@ -4,6 +4,10 @@
   padding:50px;
 }
 
+#application-content {
+  max-width:800px;
+}
+
 .application-form {
   display: grid;
   grid-template-columns: 1fr 1fr;

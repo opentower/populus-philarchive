@@ -179,46 +179,48 @@ class ApplicationView extends Component {
 
   render(props, state) {
     return <div id="application-view">
-      <div id="available-discussions">
-      {state.entry
-        ? <h2 id="entry-code">{state.entry}</h2>
-        : null
-      }
-      {state.paper ? state.paper : <h3 class="paper-info">No Paper Selected</h3> }
-      <div class="discussion-listing">
-        {this.state.contentType === "application/pdf" 
-          ? <Fragment>
-            <h5>Current Discussions:</h5>
-            {this.state.results?.length 
-              ? this.state.results.map(result => <SearchResult result={result}/>)
-              : <div class="empty-result">No discussions found</div>
+      <div id="application-content">
+        <div id="available-discussions">
+          {state.entry
+            ? <h2 id="entry-code">{state.entry}</h2>
+            : null
+          }
+          {state.paper ? state.paper : <h3 class="paper-info">No Paper Selected</h3> }
+          <div class="discussion-listing">
+            {this.state.contentType === "application/pdf" 
+              ? <Fragment>
+                <h5>Current Discussions:</h5>
+                {this.state.results?.length 
+                  ? this.state.results.map(result => <SearchResult result={result}/>)
+                  : <div class="empty-result">No discussions found</div>
+                }
+              </Fragment>
+              : state.paper 
+                ? "Couldn't locate a PDF for this record"
+                : "Enter a PDF code from PhilArchive to begin"
             }
-          </Fragment>
-          : state.paper 
-            ? "Couldn't locate a PDF for this record"
-            : "Enter a PDF code from PhilArchive to begin"
+        </div>
+        {state.entry 
+          ? <button onclick={this.toggleCreation} id="new-discussion">+ Create a New Discussion of {state.entry}</button>
+          : null
+        }
+        </div>
+        <hr style="width:100%" />
+        {!state.creation 
+          ? <form class="application-form" onSubmit={this.handleSubmit} ref={this.loginForm}>
+            <label htmlFor="archiveCode">PhilArchive Code</label>
+            <input key="archiveCode" name="archiveCode"></input>
+            <button class="styled-button">Look Up Paper</button>
+          </form>
+          : <form class="application-form" onSubmit={this.createDiscussion} ref={this.creationForm}>
+            <label htmlFor="roomName">Discussion Name</label>
+            <input key="roomName" name="roomName"></input>
+            <label htmlFor="roomTopic">Discussion Topic</label>
+            <textarea name="roomTopic"></textarea>
+            <button class="styled-button">Create Discussion</button>
+          </form>
         }
       </div>
-      {state.entry 
-        ? <button onclick={this.toggleCreation} id="new-discussion">+ Create a New Discussion of {state.entry}</button>
-        : null
-      }
-      </div>
-      <hr style="width:100%" />
-      {!state.creation 
-        ? <form class="application-form" onSubmit={this.handleSubmit} ref={this.loginForm}>
-          <label htmlFor="archiveCode">PhilArchive Code</label>
-          <input key="archiveCode" name="archiveCode"></input>
-          <button class="styled-button">Look Up Paper</button>
-        </form>
-        : <form class="application-form" onSubmit={this.createDiscussion} ref={this.creationForm}>
-          <label htmlFor="roomName">Discussion Name</label>
-          <input key="roomName" name="roomName"></input>
-          <label htmlFor="roomTopic">Discussion Topic</label>
-          <textarea name="roomTopic"></textarea>
-          <button class="styled-button">Create Discussion</button>
-        </form>
-      }
     </div>
   }
 }
