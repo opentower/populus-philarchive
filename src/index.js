@@ -94,7 +94,6 @@ class ApplicationView extends Component {
 
   async renderOpenArchiveXML(rslt) {
     const text = await rslt.text()
-    console.log(text)
     const parser = new DOMParser()
     const xmldoc = parser.parseFromString(text, "text/xml")
     const resolver = xmldoc.createNSResolver(xmldoc)
@@ -135,7 +134,6 @@ class ApplicationView extends Component {
         generic_search_term: this.state.entry
       }
     })
-    console.log(results)
     this.setState({results: results.chunk})
   }
 
@@ -226,7 +224,6 @@ class ApplicationView extends Component {
 }
 
 function SearchResult(props) {
-  console.log(props.result)
   return <div class="search-result">
     <div class="search-result-name">
       <a href={`https://opentower.github.io/populus-viewer/#/${encodeURIComponent(props.result.canonical_alias.slice(1))}`}>
