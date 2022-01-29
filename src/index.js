@@ -200,7 +200,7 @@ class ApplicationView extends Component {
                 : "Enter a PDF code from PhilArchive to begin"
             }
         </div>
-        {state.entry 
+        {state.entry && state.paper
           ? <button onclick={this.toggleCreation} id="new-discussion">+ Create a New Discussion of {state.entry}</button>
           : null
         }
