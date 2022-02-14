@@ -1,6 +1,7 @@
 import { h, render, Fragment, createRef, Component } from 'preact'
 import LoginView from './login.js'
 import Client from './client.js'
+import * as Icon from './icons.js'
 import { mscResourceData, spaceChild }from './constants.js'
 import './styles/global.css'
 import './styles/applicationView.css'
@@ -53,14 +54,12 @@ class PopulusPhilArchive extends Component {
 }
 
 class ApplicationView extends Component {
-  loginForm = createRef()
-
   creationForm = createRef()
 
-  handleSubmit = async e => {
-    e.preventDefault()
-    const formdata = new FormData(this.loginForm.current)
-    const entry = Array.from(formdata.entries())[0][1]
+  setPaper = async entryRaw => {
+    console.log(entryRaw)
+    const split = entryRaw.split("/")
+    const entry = split[split.length - 1]
     try {
       const rslt = await fetch(`https://via.open-tower.com/https://philarchive.org/oai.pl?verb=GetRecord&identifier=oai:philarchive.org/rec/${entry}`)
       .then(this.renderOpenArchiveXML)
@@ -195,7 +194,7 @@ class ApplicationView extends Component {
               </Fragment>
               : state.paper 
                 ? "Couldn't locate a PDF for this record"
-                : "Enter a PDF code from PhilArchive to begin"
+                : "Select a paper to begin"
             }
         </div>
         {state.entry && state.paper
@@ -205,11 +204,7 @@ class ApplicationView extends Component {
         </div>
         <hr style="width:100%" />
         {!state.creation 
-          ? <form class="application-form" onSubmit={this.handleSubmit} ref={this.loginForm}>
-            <label htmlFor="archiveCode">PhilArchive Code</label>
-            <input key="archiveCode" name="archiveCode"></input>
-            <button class="styled-button">Look Up Paper</button>
-          </form>
+          ? <PaperSearch setPaper={this.setPaper} />
           : <form class="application-form" onSubmit={this.createDiscussion} ref={this.creationForm}>
             <label htmlFor="roomName">Discussion Name</label>
             <input key="roomName" name="roomName"></input>
@@ -220,6 +215,77 @@ class ApplicationView extends Component {
         }
       </div>
     </div>
+  }
+}
+
+class PaperSearch extends Component {
+  handleSubmit = async e => {
+    e.preventDefault()
+    const formdata = new FormData(this.searchForm.current)
+    const query = Array.from(formdata.entries())[0][1]
+    this.setState({query}, _ => this.getPage(1))
+  }
+
+  getPage = async num => {
+    this.setState({querying:true})
+    const results = await fetch(`https://oai.open-tower.com/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        query: this.state.query, 
+        opts: { 
+          PAGE: {
+            NUMBER: num, 
+            SIZE: 5
+          },
+          DOCUMENTS: true
+        }
+      })
+    }).then(stream => stream.json())
+    console.log(results)
+    this.setState({results, querying:false, page: num})
+  }
+
+  nextPage = _ => {
+    if ((this.state.page - 1) * 5 < this.state.results.RESULT_LENGTH) {
+      this.getPage(this.state.page + 1)
+    }
+  }
+
+  prevPage = _ => {
+    if (this.state.page > 1) {
+      this.getPage(this.state.page - 1)
+    }
+  }
+
+  clearResults = _ => this.setState({query:null, page:null, results:null})
+
+  searchForm = createRef()
+
+  render(props, state) {
+    return state.results 
+      ? <div>
+          <div>
+            <span>Query: {state.query}</span>
+            <button onclick={this.clearResults} class="nav-button">{Icon.close}</button>
+          </div>
+          <ol id="query-results" data-querying={state.querying}>
+            {state.results.RESULT.map(rslt => <li>
+              <a onclick={_ => props.setPaper(rslt._id)}>{rslt._doc.title}</a> ▪ 
+              <span>{rslt._doc.creator}</span>
+            </li>)}
+          </ol>
+          <div>
+            <span>Showing: {state.page * 5}/{state.results.RESULT_LENGTH}</span>
+            <button onClick={this.prevPage} class="nav-button">«</button>
+            <button onClick={this.nextPage} class="nav-button">»</button>
+          </div>
+      </div>
+      : <form class="application-form" onSubmit={this.handleSubmit} ref={this.searchForm}>
+        <label htmlFor="archive-query">Philarchive Query</label>
+        <input key="query" name="archive-query"></input>
+        <button class="styled-button">Look Up Paper</button>
+      </form>
   }
 }
 

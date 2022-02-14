@@ -69,6 +69,22 @@
   padding-right: 5px;
 }
 
+#query-results[data-querying] {
+  color:#ababab;
+}
+
+.nav-button {
+  border:none;
+  font-size:15pt;
+  cursor:pointer;
+  background:none;
+}
+
+.nav-button > svg { 
+  height:16px; 
+  vertical-align:middle;
+}
+
 #entry-code {
   color:#ababab;
 }
