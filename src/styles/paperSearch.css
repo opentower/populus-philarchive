@@ -1,0 +1,64 @@
+.paper-search-nav-button {
+  border:none;
+  font-size:15pt;
+  cursor:pointer;
+  background:none;
+  transition: font-weight .1s ease;
+}
+
+
+.paper-search-nav-button > svg { 
+  height:16px; 
+  vertical-align:middle;
+  transition: stroke-width .1s ease;
+}
+
+.paper-search-nav-button:hover > svg { 
+  stroke-width:4px;
+}
+
+.paper-search-nav-button:hover  { 
+  font-weight:bold;
+}
+
+.paper-search-nav-button[disabled] {
+  cursor:auto;
+  font-weight:unset;
+}
+
+.paper-search-title {
+  text-decoration:underline;
+  cursor:pointer;
+}
+
+.paper-search-title:hover {
+  text-decoration-thickness:2px;
+}
+
+.paper-search-creator {
+  font-size:10pt;
+  font-weight:bold;
+  padding:10px;
+}
+
+.application-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width:600px;
+}
+
+.application-form button,
+.application-form label {
+  max-width:150px;
+  grid-column: 1/2;
+  margin:10px 10px 10px 0px;
+}
+
+.application-form textarea,
+.application-form input{
+  grid-column: 2/3;
+  margin:10px 0px 10px 0px;
+  border:none;
+  background:#eeeeee;
+}
+

@@ -8,27 +8,6 @@
   max-width:800px;
 }
 
-.application-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  max-width:600px;
-}
-
-.application-form button,
-.application-form label {
-  max-width:150px;
-  grid-column: 1/2;
-  margin:10px;
-}
-
-.application-form textarea,
-.application-form input{
-  grid-column: 2/3;
-  margin:10px;
-  border:none;
-  background:#eeeeee;
-}
-
 .empty-result,
 .search-result {
   padding:5px;
@@ -71,18 +50,6 @@
 
 #query-results[data-querying] {
   color:#ababab;
-}
-
-.nav-button {
-  border:none;
-  font-size:15pt;
-  cursor:pointer;
-  background:none;
-}
-
-.nav-button > svg { 
-  height:16px; 
-  vertical-align:middle;
 }
 
 #entry-code {
