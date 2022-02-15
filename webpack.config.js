@@ -8,7 +8,9 @@ module.exports = {
     errorDetails: true
   },
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
     compress: true,
     port: 9000,
     host: '0.0.0.0'
@@ -19,7 +21,8 @@ module.exports = {
   },
   resolve: {
     fallback: {
-      buffer: require.resolve("buffer/")
+      buffer: require.resolve("buffer/"),
+      url: require.resolve("url/")
     }
   },
   module: {
