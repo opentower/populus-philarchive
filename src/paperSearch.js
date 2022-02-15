@@ -65,7 +65,11 @@ export default class PaperSearch extends Component {
           <ol start={((state.page - 1) * 5) + 1} id="query-results" data-querying={state.querying}>
             {state.results.RESULT.map(rslt => <li>
               <a class="paper-search-title"onclick={_ => props.setPaper(rslt._id)}>{rslt._doc.title}</a>
-              <div class="paper-search-creator">{rslt._doc.creator}</div>
+              <div class="paper-search-creators">{
+                rslt._doc.creator.map
+                  ? rslt._doc.creator.map(creator => <span class="paper-search-creator">{creator}</span>)
+                  : <span class="paper-search-creator">{rslt._doc.creator}</span>
+              }</div>
             </li>)}
           </ol>
       </div>

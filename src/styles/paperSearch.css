@@ -38,7 +38,7 @@
 .paper-search-creator {
   font-size:10pt;
   font-weight:bold;
-  padding:10px;
+  padding:10px 0px 10px 10px;
 }
 
 .application-form {
@@ -62,3 +62,7 @@
   background:#eeeeee;
 }
 
+span.paper-search-creator:not(:first-child)::before {
+  content:"•";
+  padding-right: 10px;
+}
