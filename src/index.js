@@ -218,6 +218,33 @@ class ApplicationView extends Component {
   }
 }
 
+function SearchResult(props) {
+  return <div class="search-result">
+    <div class="search-result-name">
+      <a href={`https://opentower.github.io/populus-viewer/#/${encodeURIComponent(props.result.canonical_alias.slice(1))}`}>
+        {props.result.name}
+      </a>
+    </div>
+    <div class="search-result-data">
+      {props.result.num_joined_members === 1 
+        ? <span class="search-result-members">1 member</span>
+        : <span class="search-result-members">{props.result.num_joined_members} members</span>
+      }
+      {props.result.join_rule === "public"
+        ? <span>public</span>
+        : <span>invite-only</span>
+      }
+      {
+      props.result.world_readable
+        ? <span>world-readable</span>
+        : null
+      }
+    </div>
+    <div class="search-result-topic">
+      {props.result.topic ? props.result.topic : "no topic specified"}
+    </div>
+  </div>
+}
 
 function recaptchaHandler (recaptchaToken) {
   window.dispatchEvent(new CustomEvent('recaptcha', { detail: recaptchaToken }))
