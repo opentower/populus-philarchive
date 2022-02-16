@@ -184,11 +184,11 @@ class ApplicationView extends Component {
           }
           {state.paper ? state.paper : <h3 class="paper-info">No Paper Selected</h3> }
           <div class="discussion-listing">
-            {this.state.contentType === "application/pdf" 
+            {state.contentType === "application/pdf" 
               ? <Fragment>
                 <h5>Current Discussions:</h5>
-                {this.state.results?.length 
-                  ? this.state.results.map(result => <SearchResult result={result}/>)
+                {state.results?.length 
+                  ? state.results.map(result => <SearchResult result={result}/>)
                   : <div class="empty-result">No discussions found</div>
                 }
               </Fragment>
@@ -197,7 +197,7 @@ class ApplicationView extends Component {
                 : "Select a paper to begin"
             }
         </div>
-        {state.entry && state.paper
+        {state.entry && state.paper && state.contentType === "application/pdf"
           ? <button onclick={this.toggleCreation} id="new-discussion">+ Create a New Discussion of {state.entry}</button>
           : null
         }

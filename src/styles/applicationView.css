@@ -63,6 +63,7 @@
   cursor:pointer;
   color:#ababab;
   background:none;
+  padding-left:0px;
   transition: color .5s ease;
 }
 

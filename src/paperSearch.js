@@ -7,16 +7,19 @@ export default class PaperSearch extends Component {
     e.preventDefault()
     const formdata = new FormData(this.searchForm.current)
     const query = Array.from(formdata.entries())[0][1]
-    this.setState({query}, _ => this.getPage(1))
+    this.setState({query}, _ => this.getPage(0))
   }
 
   getPage = async num => {
     this.setState({querying:true})
+    const queryTerms = this.state.query.split(/\s+|[^a-zA-Z]/) // split terms to mirror tokenizer
     const results = await fetch(`https://oai.open-tower.com/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        query: this.state.query, 
+        query: {
+          AND: queryTerms
+        },
         opts: { 
           PAGE: {
             NUMBER: num, 
@@ -44,7 +47,7 @@ export default class PaperSearch extends Component {
     }
   }
 
-  prevAvailable = _ => this.state.page > 1
+  prevAvailable = _ => this.state.page > 0
 
   clearResults = _ => this.setState({query:null, page:null, results:null})
 
@@ -58,11 +61,11 @@ export default class PaperSearch extends Component {
             <button onclick={this.clearResults} class="paper-search-nav-button">{Icon.close}</button>
           </div>
           <div>
-            <span>Showing: {state.page * 5}/{state.results.RESULT_LENGTH}</span>
+            <span>Showing: {((state.page + 1) * 5) - 4}-{(state.page + 1) * 5} of {state.results.RESULT_LENGTH}</span>
             <button disabled={!this.prevAvailable()} onClick={this.prevPage} class="paper-search-nav-button">«</button>
             <button disabled={!this.nextAvailable()} onClick={this.nextPage} class="paper-search-nav-button">»</button>
           </div>
-          <ol start={((state.page - 1) * 5) + 1} id="query-results" data-querying={state.querying}>
+          <ol start={((state.page) * 5) + 1} id="query-results" data-querying={state.querying}>
             {state.results.RESULT.map(rslt => <li>
               <a class="paper-search-title"onclick={_ => props.setPaper(rslt._id)}>{rslt._doc.title}</a>
               <div class="paper-search-creators">{
