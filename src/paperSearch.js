@@ -61,7 +61,7 @@ export default class PaperSearch extends Component {
             <button onclick={this.clearResults} class="paper-search-nav-button">{Icon.close}</button>
           </div>
           <div>
-            <span>Showing: {((state.page + 1) * 5) - 4}-{(state.page + 1) * 5} of {state.results.RESULT_LENGTH}</span>
+            <span>Showing: {((state.page + 1) * 5) - 4}-{Math.min((state.page + 1) * 5), state.results.RESULT_LENGTH} of {state.results.RESULT_LENGTH}</span>
             <button disabled={!this.prevAvailable()} onClick={this.prevPage} class="paper-search-nav-button">«</button>
             <button disabled={!this.nextAvailable()} onClick={this.nextPage} class="paper-search-nav-button">»</button>
           </div>
