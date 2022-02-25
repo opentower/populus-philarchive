@@ -12,7 +12,8 @@ export default class PaperSearch extends Component {
 
   getPage = async num => {
     this.setState({querying:true})
-    const queryTerms = this.state.query.split(/\s+|[^a-zA-Z]/) // split terms to mirror tokenizer
+    const queryTerms = this.state.query.split(/\s+|[^a-zA-Z]/).filter(term => term.length > 0) // split terms to mirror tokenizer
+    console.log(queryTerms)
     const results = await fetch(`https://oai.open-tower.com/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -84,30 +85,3 @@ export default class PaperSearch extends Component {
   }
 }
 
-function SearchResult(props) {
-  return <div class="search-result">
-    <div class="search-result-name">
-      <a href={`https://opentower.github.io/populus-viewer/#/${encodeURIComponent(props.result.canonical_alias.slice(1))}`}>
-        {props.result.name}
-      </a>
-    </div>
-    <div class="search-result-data">
-      {props.result.num_joined_members === 1 
-        ? <span class="search-result-members">1 member</span>
-        : <span class="search-result-members">{props.result.num_joined_members} members</span>
-      }
-      {props.result.join_rule === "public"
-        ? <span>public</span>
-        : <span>invite-only</span>
-      }
-      {
-      props.result.world_readable
-        ? <span>world-readable</span>
-        : null
-      }
-    </div>
-    <div class="search-result-topic">
-      {props.result.topic ? props.result.topic : "no topic specified"}
-    </div>
-  </div>
-}
