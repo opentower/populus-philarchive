@@ -35,10 +35,19 @@
   text-decoration-thickness:2px;
 }
 
+.paper-search-creators {
+  margin:0px 0px 10px 10px;
+}
+
 .paper-search-creator {
   font-size:10pt;
   font-weight:bold;
-  padding:10px 0px 10px 10px;
+  padding-left:10px;
+}
+
+
+.paper-search-creator:first-child {
+  padding-left:0px;
 }
 
 .application-form {

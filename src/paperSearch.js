@@ -13,7 +13,6 @@ export default class PaperSearch extends Component {
   getPage = async num => {
     this.setState({querying:true})
     const queryTerms = this.state.query.split(/\s+|[^a-zA-Z]/).filter(term => term.length > 0) // split terms to mirror tokenizer
-    console.log(queryTerms)
     const results = await fetch(`https://oai.open-tower.com/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -80,7 +79,9 @@ export default class PaperSearch extends Component {
       : <form class="application-form" onSubmit={this.handleSubmit} ref={this.searchForm}>
         <label htmlFor="archive-query">Philarchive Query</label>
         <input key="query" name="archive-query"></input>
-        <button class="styled-button">Look Up Paper</button>
+        <button disabled={state.querying} class="styled-button">
+          { state.querying ? "Searching..." : "Look Up Paper" }
+        </button>
       </form>
   }
 }

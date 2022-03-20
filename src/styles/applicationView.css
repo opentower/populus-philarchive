@@ -65,6 +65,7 @@
   background:none;
   padding-left:0px;
   transition: color .5s ease;
+  text-align:left;
 }
 
 #new-discussion:hover {
