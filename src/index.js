@@ -57,7 +57,6 @@ class ApplicationView extends Component {
   creationForm = createRef()
 
   setPaper = async entryRaw => {
-    console.log(entryRaw)
     const split = entryRaw.split("/")
     const entry = split[split.length - 1]
     try {
@@ -112,10 +111,15 @@ class ApplicationView extends Component {
       authors.push(author.textContent)
       author = authorIterator.iterateNext()
     }
-    const description = xmldoc
-      .evaluate("//dc:description", xmldoc, resolver, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
-      .singleNodeValue
-      .textContent
+    let description
+    try { 
+      description = xmldoc
+        .evaluate("//dc:description", xmldoc, resolver, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
+        .singleNodeValue
+        .textContent
+    } catch (e) {
+      description = "No description available."
+    }
     return <Fragment>
       <h3 class="paper-title">{title}</h3>
       <h5 class="paper-authors">
