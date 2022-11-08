@@ -52,23 +52,31 @@
 
 .application-form {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  max-width:600px;
+  grid-template-columns:160px 1fr;
 }
 
 .application-form button,
 .application-form label {
   max-width:150px;
   grid-column: 1/2;
-  margin:10px 10px 10px 0px;
+  margin:5px 5px 0px 0px;
+  padding: 5px 5px 5px 5px;
 }
 
 .application-form textarea,
 .application-form input{
-  grid-column: 2/3;
-  margin:10px 0px 10px 0px;
+  margin:5px 0px 10px 0px;
+  padding: 5px 5px 5px 5px;
+  grid-column: 1/3;
   border:none;
   background:#eeeeee;
+}
+
+@media (min-width:500px) {
+  .application-form textarea,
+  .application-form input {
+    grid-column: 2/3;
+  }
 }
 
 span.paper-search-creator:not(:first-child)::before {

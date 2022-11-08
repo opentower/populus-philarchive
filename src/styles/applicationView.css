@@ -6,6 +6,7 @@
 
 #application-content {
   max-width:800px;
+  min-width:min(800px,90vw);
 }
 
 .empty-result,
