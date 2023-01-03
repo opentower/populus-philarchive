@@ -29,8 +29,7 @@ export default class PaperSearch extends Component {
         }
       })
     }).then(stream => stream.json())
-    console.log(results)
-    this.setState({results, querying:false, page: num})
+    this.setState({results, querying:null, page: num})
   }
 
   nextPage = _ => {
